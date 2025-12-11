@@ -1,0 +1,5 @@
+pyautogui
+python-dotenv
+sounddevice
+numpy
+openai-whisper
