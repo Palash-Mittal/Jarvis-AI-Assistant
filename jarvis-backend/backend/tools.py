@@ -7,14 +7,12 @@ import time
 def open_app(name: str):
     try:
         name = name.lower()
-
         mapping = {
             "chrome": r"C:\Program Files\Google\Chrome\Application\chrome.exe",
             "notepad": "notepad.exe",
             "calculator": "calc.exe",
             "explorer": "explorer.exe"
         }
-
         if name in mapping:
             os.startfile(mapping[name])
             return {"status": "ok", "message": f"Opened {name}"}
@@ -25,7 +23,6 @@ def open_app(name: str):
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
-
 def google_search(query: str):
     try:
         url = f"https://www.google.com/search?q={query}"
@@ -33,7 +30,6 @@ def google_search(query: str):
         return {"status": "ok", "message": f"Searched: {query}"}
     except Exception as e:
         return {"status": "error", "message": str(e)}
-
 
 def type_text(text: str):
     try:

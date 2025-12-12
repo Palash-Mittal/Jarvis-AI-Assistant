@@ -5,7 +5,6 @@ import tempfile
 import wave
 
 model = whisper.load_model("small")
-
 SAMPLE_RATE = 16000
 
 def record_audio(seconds=4):
@@ -13,12 +12,12 @@ def record_audio(seconds=4):
     sd.wait()
     return np.squeeze(audio)
 
-def save_temp_wav(audio_data, sample_rate=SAMPLE_RATE):
+def save_temp_wav(audio_data, sr=SAMPLE_RATE):
     temp = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
     with wave.open(temp.name, "wb") as wf:
         wf.setnchannels(1)
         wf.setsampwidth(2)
-        wf.setframerate(sample_rate)
+        wf.setframerate(sr)
         pcm = (audio_data * 32767).astype(np.int16)
         wf.writeframes(pcm.tobytes())
     return temp.name
