@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { spawn } = require("child_process");
+
 let jarvis;
 let win;
 
@@ -24,15 +25,17 @@ app.whenReady().then(() => {
   jarvis.stdout.on("data", (data) => {
     const text = data.toString().trim();
     console.log("PYTHON → ELECTRON:", text);
+
+    // Send to renderer
     win.webContents.send("jarvis-response", text);
   });
 
   jarvis.stderr.on("data", (data) => {
-    console.error("PYTHON ERROR:", data.toString());
+    console.log("PYTHON ERROR:", data.toString());
   });
 });
 
-// RECEIVE from renderer, SEND to python
+// RECEIVE from renderer, SEND to Python
 ipcMain.on("send-to-jarvis", (event, message) => {
   console.log("ELECTRON → PYTHON:", message);
   jarvis.stdin.write(JSON.stringify({ command: message }) + "\n");
