@@ -1,0 +1,53 @@
+2025-12-14 20:01:01,397 | DEBUG | Sent to stdout: {"status": "jarvis-ready"}
+2025-12-14 20:01:01,398 | INFO | Engine started, waiting for input on stdin...
+2025-12-14 20:01:14,516 | INFO | Received raw input: open chrome and open notepad
+2025-12-14 20:01:14,517 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:01:14,517 | INFO | User: open chrome and open notepad
+2025-12-14 20:01:18,008 | ERROR | Error handling raw command
+Traceback (most recent call last):
+  File "c:\Users\Palash\Documents\Jarvis-AI-Assistant\jarvis-backend\backend\main.py", line 41, in main_loop
+    out = decide(command_text)
+  File "c:\Users\Palash\Documents\Jarvis-AI-Assistant\jarvis-backend\backend\jarvis_brain.py", line 203, in decide
+    results = execute_plan(actions)
+  File "c:\Users\Palash\Documents\Jarvis-AI-Assistant\jarvis-backend\backend\jarvis_brain.py", line 141, in execute_plan
+    tool = a.get("tool")
+           ^^^^^
+AttributeError: 'str' object has no attribute 'get'
+2025-12-14 20:01:18,011 | DEBUG | Sent to stdout: {"reply": "[ERROR] internal error", "tool": "none", "result": null}
+2025-12-14 20:05:50,706 | INFO | Received raw input: python -u "c:\Users\Palash\Documents\Jarvis-AI-Assistant\jarvis-backend\backend\main.py"
+2025-12-14 20:05:50,706 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:05:50,706 | INFO | User: python -u "c:\Users\Palash\Documents\Jarvis-AI-Assistant\jarvis-backend\backend\main.py"
+2025-12-14 20:05:55,184 | DEBUG | Sent to stdout: {"reply": "Understood, sir. I am ready to assist you.  What can I do for you?", "tool": [], "result": []}
+2025-12-14 20:06:11,901 | INFO | Received raw input: shutdown
+2025-12-14 20:06:11,901 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:06:11,901 | INFO | User: shutdown
+2025-12-14 20:06:15,742 | DEBUG | Sent to stdout: {"reply": "As you wish, sir. Goodbye.", "tool": [], "result": []}
+2025-12-14 20:06:27,054 | INFO | KeyboardInterrupt received, shutting down
+2025-12-14 20:06:27,055 | INFO | Engine exiting
+2025-12-14 20:12:00,909 | DEBUG | Sent to stdout: {"status": "jarvis-ready"}
+2025-12-14 20:12:00,910 | INFO | Engine started, waiting for input on stdin...
+2025-12-14 20:12:12,953 | INFO | Received raw input: open chrome and notepad
+2025-12-14 20:12:12,954 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:12:12,954 | INFO | User: open chrome and notepad
+2025-12-14 20:12:29,972 | INFO | open_app -> launching mapped path: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-14 20:12:29,998 | INFO | open_app -> launching mapped path: notepad.exe
+2025-12-14 20:12:32,116 | DEBUG | Sent to stdout: {"reply": "Chrome and Notepad are now open, sir.", "tool": ["open_app", "open_app"], "result": [{"status": "ok", "message": "Opened chrome"}, {"status": "ok", "message": "Opened notepad"}]}
+2025-12-14 20:12:45,228 | INFO | Received raw input: shutdown
+2025-12-14 20:12:45,229 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:12:45,229 | INFO | User: shutdown
+2025-12-14 20:12:49,366 | DEBUG | Sent to stdout: {"reply": "Powering down systems. Please stand by, sir.", "tool": [], "result": []}
+2025-12-14 20:13:07,159 | INFO | Received raw input: shutdown
+2025-12-14 20:13:07,159 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:13:07,160 | INFO | User: shutdown
+2025-12-14 20:13:10,546 | DEBUG | Sent to stdout: {"reply": "Standby mode engaged, sir.", "tool": [], "result": []}
+2025-12-14 20:14:37,557 | INFO | Received raw input: remember that my answer sheets will be shown on 17 and open chrome
+2025-12-14 20:14:37,557 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:14:37,557 | INFO | User: remember that my answer sheets will be shown on 17 and open chrome
+2025-12-14 20:14:47,362 | INFO | open_app -> launching mapped path: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-14 20:14:50,788 | DEBUG | Sent to stdout: {"reply": "Acknowledged, sir. Your answer sheets will be shown on the 17th. Chrome is now open.", "tool": ["remember", "open_app"], "result": ["memory saved", {"status": "ok", "message": "Opened chrome"}]}
+2025-12-14 20:15:29,836 | INFO | Received raw input: what do you remember
+2025-12-14 20:15:29,836 | DEBUG | Input is not JSON, treating as raw command
+2025-12-14 20:15:29,837 | INFO | User: what do you remember
+2025-12-14 20:15:34,861 | DEBUG | Sent to stdout: {"reply": "Your answer sheets will be shown on the 17th, sir.  Chrome is open and ready.", "tool": [], "result": []}
+2025-12-14 20:15:57,858 | INFO | KeyboardInterrupt received, shutting down
+2025-12-14 20:15:57,858 | INFO | Engine exiting
