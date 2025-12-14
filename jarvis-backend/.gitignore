@@ -23,3 +23,5 @@ electron-app/Thumbs.db
 electron-app/.env
 
 backend/memory.db
+
+backend/backend/
