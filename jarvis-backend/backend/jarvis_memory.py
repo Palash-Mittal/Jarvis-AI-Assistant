@@ -1,5 +1,6 @@
 # backend/jarvis_memory.py
-from db import get_conn, init_db
+from db import get_conn, init_db, DB_PATH
+import sqlite3
 
 init_db()
 
@@ -26,6 +27,14 @@ def find_memory_by_key(key: str):
         )
         row = cur.fetchone()
         return row[0] if row else None
+    
+def delete_memory_by_id(mem_id: int):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("DELETE FROM memory WHERE id = ?", (mem_id,))
+    conn.commit()
+    conn.close()
+
 
 def clear_memory():
     with get_conn() as conn:
