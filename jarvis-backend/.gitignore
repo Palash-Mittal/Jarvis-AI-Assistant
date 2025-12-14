@@ -25,3 +25,5 @@ electron-app/.env
 backend/memory.db
 
 backend/backend/
+
+backend/__pycache__
