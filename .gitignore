@@ -1,0 +1,29 @@
+# Node modules
+electron-app/node_modules/
+
+# Electron build output
+electron-app/dist/
+electron-app/build/
+electron-app/out/
+electron-app/release/
+
+# Executables
+electron-app/*.exe
+
+# Logs
+electron-app/npm-debug.log*
+electron-app/yarn-debug.log*
+electron-app/yarn-error.log*
+
+# OS files
+electron-app/.DS_Store
+electron-app/Thumbs.db
+
+# Environment variables
+electron-app/.env
+
+backend/memory.db
+
+backend/backend/
+
+backend/__pycache__
