@@ -5,7 +5,7 @@ from tools import open_app, google_search, type_text
 from jarvis_memory import add_memory, get_all_memory, find_memory_by_key, delete_memory_by_id
 import config
 from logger import logger
-
+import time
 
 # -------------------- LLM CONFIG --------------------
 
@@ -237,7 +237,16 @@ Respond as Jarvis:
 
 def decide(message: str, model=None):
     logger.info(f"User: {message}")
-
+    if (message.lower()).find("shutdown")!=-1:
+        reply=jarvis_reply(message)
+        speak(reply)
+        time.sleep(8)
+        return {
+        "reply": reply,
+        "tool": "meta",
+        "result": {"shutdown":True}
+        }
+    
     plan = llm_plan(message)
     actions = plan.get("actions", [])
 
