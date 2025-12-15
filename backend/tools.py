@@ -20,7 +20,19 @@ def open_app(name: str):
             "chrome": r"C:\Program Files\Google\Chrome\Application\chrome.exe",
             "notepad": "notepad.exe",
             "calculator": "calc.exe",
-            "explorer": "explorer.exe"
+            "explorer": "explorer.exe",
+            "task manager": "taskmgr.exe",
+            "paint": "mspaint.exe",
+            "command prompt": "cmd.exe",
+            "visual stdio code": "Code.exe",
+            "edge": "msedge.exe",
+            "whatsapp": "WhatsApp.exe",
+            "word": "winword.exe",
+            "excel": "excel.exe",
+            "powerpoint": "powerpnt.exe",
+            "epic games": "C:\Program Files (x86)\Epic Games\Launcher\Engine\Binaries\Win64\EpicGamesLauncher.exe",
+            "steam": "C:\Program Files (x86)\Steam\steam.exe",
+
         }
         if name in mapping:
             path = mapping[name]
@@ -32,6 +44,20 @@ def open_app(name: str):
         return {"status": "ok", "message": f"Tried opening {name}"}
     except Exception as e:
         logger.exception("open_app failed")
+        return {"status": "error", "message": str(e)}
+
+def open_web(name: str):
+    try:
+        name=name.lower().strip()
+        mapping={
+            "youtube": "https://www.youtube.com/",
+            "chatgpt": "https://chatgpt.com/",
+            "github": "https://github.com/",
+            "instagram": "https://www.instagram.com/",
+            "reddit": "https://www.reddit.com/",
+        }
+    except Exception as e:
+        logger.exception("open_web failed")
         return {"status": "error", "message": str(e)}
 
 def google_search(query: str):
