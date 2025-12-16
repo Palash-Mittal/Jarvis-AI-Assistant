@@ -1,7 +1,7 @@
 import subprocess
 import json
 from jarvis_tts import speak
-from tools import open_app, google_search, type_text
+from tools import open_app, google_search, type_text, open_web
 from jarvis_memory import add_memory, get_all_memory, find_memory_by_key, delete_memory_by_id
 import config
 from logger import logger
@@ -29,9 +29,14 @@ Available tools:
 - type_text(text)
 - remember(text)
 - forget(text)
+- open_web(website)
+
 
 Rules:
 - Extract all requested actions in order.
+- To differentiate between a app and a website use common logic and if the user states that he want a webite or an app to open then choose the funtion according to the user
+- If the command is ambiguous between the app and website prefer website
+- If the command is ambiguous between the google search and website prefer website
 - If no action is required, return an empty list.
 - Respond ONLY with valid JSON.
 """
@@ -177,11 +182,13 @@ def execute_plan(actions):
 
         tool = a.get("tool")
         args = a.get("args", {})
+        if tool == "open_app" and "." in args.get("app_name"):
+            tool = "open_web"
 
-        if tool == "open_app":
+        if tool == "open_app" and args.get("app_name"):
             results.append(open_app(args.get("app_name")))
 
-        elif tool == "google_search":
+        elif tool == "google_search" and args.get("query"):
             results.append(google_search(args.get("query")))
 
         elif tool == "type_text":
@@ -193,6 +200,9 @@ def execute_plan(actions):
 
         elif tool == "forget":
             results.append(forget_memory(args.get("text")))
+
+        elif tool == "open_web" and args.get("website"):
+            results.append(open_web(args.get("website")))
 
         else:
             logger.error(f"Unknown tool: {tool}")
@@ -258,6 +268,10 @@ def decide(message: str, model=None):
         "No system actions were required."
     )
 
+    for a in results:
+        if a["status"]=="error":
+            context = "Some actions could not be completed."
+    
     reply = jarvis_reply(message, context)
     speak(reply)
 
