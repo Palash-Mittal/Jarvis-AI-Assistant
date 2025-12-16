@@ -16,6 +16,21 @@ except Exception:
 def open_app(name: str):
     try:
         name = name.lower().strip()
+        aliases = {
+          "vscode": "visual studio code",
+          "vs code": "visual studio code",
+          "file explorer": "explorer",
+          "cmd": "command prompt",
+          "ms edge": "egde",
+          "microsoft edge": "edge",
+          "microsoft word": "word",
+          "microsoft excel": "excel",
+          "microsoft powerpoint": "powerpoint"
+        }
+
+        if name in aliases:
+            name=aliases[name]
+
         mapping = {
             "chrome": r"C:\Program Files\Google\Chrome\Application\chrome.exe",
             "notepad": "notepad.exe",
@@ -24,14 +39,14 @@ def open_app(name: str):
             "task manager": "taskmgr.exe",
             "paint": "mspaint.exe",
             "command prompt": "cmd.exe",
-            "visual stdio code": "Code.exe",
+            "visual studio code": "Code.exe",
             "edge": "msedge.exe",
             "whatsapp": "WhatsApp.exe",
             "word": "winword.exe",
             "excel": "excel.exe",
             "powerpoint": "powerpnt.exe",
-            "epic games": "C:\Program Files (x86)\Epic Games\Launcher\Engine\Binaries\Win64\EpicGamesLauncher.exe",
-            "steam": "C:\Program Files (x86)\Steam\steam.exe",
+            "epic games": r"C:\Program Files (x86)\Epic Games\Launcher\Engine\Binaries\Win64\EpicGamesLauncher.exe",
+            "steam": r"C:\Program Files (x86)\Steam\steam.exe",
 
         }
         if name in mapping:
@@ -40,7 +55,7 @@ def open_app(name: str):
             os.startfile(path)
             return {"status": "ok", "message": f"Opened {name}"}
         # fallback: try start command
-        subprocess.Popen(['start', name], shell=True)
+        os.startfile(name)
         return {"status": "ok", "message": f"Tried opening {name}"}
     except Exception as e:
         logger.exception("open_app failed")
@@ -56,6 +71,15 @@ def open_web(name: str):
             "instagram": "https://www.instagram.com/",
             "reddit": "https://www.reddit.com/",
         }
+        if name in mapping:
+            path=mapping[name]
+            logger.info(f"open_web -> launching mapped path: {path}")
+            os.startfile(path)
+            return {"status": "ok", "message": f"Opened {name}"}
+        #fallback
+        url = f"https://www.google.com/search?q={name}"
+        os.startfile(url)
+        return {"status": "ok", "message": f"Tried opening {name}"}
     except Exception as e:
         logger.exception("open_web failed")
         return {"status": "error", "message": str(e)}
