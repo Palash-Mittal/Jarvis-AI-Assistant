@@ -240,7 +240,7 @@ def decide(message: str, model=None):
     if (message.lower()).find("shutdown")!=-1:
         reply=jarvis_reply(message)
         speak(reply)
-        time.sleep(8)
+        time.sleep(6)
         return {
         "reply": reply,
         "tool": "meta",
