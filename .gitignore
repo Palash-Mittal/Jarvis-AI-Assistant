@@ -26,4 +26,6 @@ backend/memory.db
 
 backend/backend/
 
+backend/jarvis.log
+
 backend/__pycache__
