@@ -23,22 +23,36 @@ Do not mention tools, code, or technical details.
 
 
 TOOL_DEFINITIONS = """
-Available tools:
-- open_app(app_name)
-- google_search(query)
-- type_text(text)
-- remember(text)
-- forget(text)
-- open_web(website)
+Available tools (use EXACT names and arguments):
 
+1. open_app(app_name: string)
+   - Use ONLY to open installed desktop applications.
 
-Rules:
-- Extract all requested actions in order.
-- To differentiate between a app and a website use common logic and if the user states that he want a webite or an app to open then choose the funtion according to the user
-- If the command is ambiguous between the app and website prefer website
-- If the command is ambiguous between the google search and website prefer website
-- If no action is required, return an empty list.
-- Respond ONLY with valid JSON.
+2. open_web(website: string)
+   - Use to open websites in a browser.
+   - The argument should be a short site name or domain (example: "youtube", "github", "google.com").
+
+3. google_search(query: string)
+   - Use ONLY when the user is explicitly asking to search for information,
+     not when they want to open a website.
+
+4. type_text(text: string)
+   - Use to type text on the keyboard.
+
+5. remember(text: string)
+   - Use to save important information to memory.
+
+6. forget(text: string)
+   - Use to delete previously saved memory.
+
+Decision rules (VERY IMPORTANT):
+- If the request could mean either an app or a website, ALWAYS prefer open_web.
+- If the request could mean either a website or a Google search, ALWAYS prefer open_web.
+- Use open_app ONLY when the user clearly refers to a desktop application.
+- If the user explicitly says "website", "site", "browser", or provides a URL, use open_web.
+- If multiple actions are requested, return them in the correct order.
+- If no tool is needed, return an empty list of actions.
+
 """
 
 
@@ -182,8 +196,11 @@ def execute_plan(actions):
 
         tool = a.get("tool")
         args = a.get("args", {})
+        name = args.get("app_name")
+
         if tool == "open_app" and "." in args.get("app_name"):
             tool = "open_web"
+            args = {"website": name}
 
         if tool == "open_app" and args.get("app_name"):
             results.append(open_app(args.get("app_name")))
@@ -247,31 +264,41 @@ Respond as Jarvis:
 
 def decide(message: str, model=None):
     logger.info(f"User: {message}")
-    if (message.lower()).find("shutdown")!=-1:
-        reply=jarvis_reply(message)
-        speak(reply)
-        time.sleep(6)
-        return {
-        "reply": reply,
-        "tool": "meta",
-        "result": {"shutdown":True}
-        }
+    for a in ["shutdown","exit"]:
+        if (message.lower()).find(a)!=-1:
+            reply=jarvis_reply(message)
+            speak(reply)
+            time.sleep(6)
+            return {
+            "reply": reply,
+            "tool": "meta",
+            "result": {"shutdown":True}
+            }
     
     plan = llm_plan(message)
     actions = plan.get("actions", [])
 
     results = execute_plan(actions)
 
-    context = (
-        f"Actions executed: {', '.join(a['tool'] for a in actions)}"
-        if actions else
-        "No system actions were required."
-    )
-
+    errors=[]
     for a in results:
-        if a["status"]=="error":
-            context = "Some actions could not be completed."
+        if a.get("status") == "error":
+            errors = errors.append(a)
+
+    if len(errors)==0:
+        context = (
+        f"Actions executed: {', '.join(a['tool'] for a in actions)}"
+        )
     
+    elif len(errors)>0 and len(errors)<len(actions):
+        context = "Some requested actions were completed, but others could not be."
+
+    elif len(errors)==len(actions):
+        context = "I was unable to complete the requested actions."
+
+    if actions and not results:
+        context = "No actions could be executed"
+
     reply = jarvis_reply(message, context)
     speak(reply)
 

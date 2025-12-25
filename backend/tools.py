@@ -64,6 +64,16 @@ def open_app(name: str):
 def open_web(name: str):
     try:
         name=name.lower().strip()
+        aliases = {
+            "yt": "youtube",
+            "gpt": "chatgpt",
+            "insta": "instagram",
+            "ig": "instagram"
+        }
+
+        if name in aliases:
+            name = aliases[name]
+
         mapping={
             "youtube": "https://www.youtube.com/",
             "chatgpt": "https://chatgpt.com/",

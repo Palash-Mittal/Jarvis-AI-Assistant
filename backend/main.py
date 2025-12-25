@@ -56,7 +56,11 @@ def main_loop():
         if command == "voice_input":
             try:
                 text = transcribe_whisper()
-                send({"text": text})
+                out = decide(text)
+                send(out)
+                if out.get("tool") == "meta" and isinstance(out.get("result"), dict) and out["result"].get("shutdown"):
+                    logger.info("Shutdown requested -> exiting")
+                    break
             except Exception:
                 logger.exception("Voice transcription failed")
                 send({"text": ""})
