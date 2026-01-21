@@ -31,16 +31,16 @@ def main_loop():
             continue
 
         logger.info("Received raw input: " + raw)
-        # try JSON first
+        # trying JSON first
         req = safe_json_load(raw)
         if req is None:
-            # If not json and raw-text allowed, treat as raw command
+            # If not json, treating as raw command
             logger.debug("Input is not JSON, treating as raw command")
             command_text = raw
             try:
                 out = decide(command_text)
                 send(out)
-                # handle shutdown signal
+                # handling shutdown
                 if out.get("tool") == "meta" and isinstance(out.get("result"), dict) and out["result"].get("shutdown"):
                     logger.info("Shutdown requested -> exiting")
                     break
@@ -52,7 +52,7 @@ def main_loop():
         # if json, expect {"command": "..."} optionally {"model": "..."}
         command = req.get("command") or req.get("message") or ""
         model = req.get("model")
-        # special voice input
+        # trying voice input
         if command == "voice_input":
             try:
                 text = transcribe_whisper()
@@ -79,7 +79,7 @@ def main_loop():
         try:
             result = decide(command, model=model)
             send(result)
-            # handle shutdown
+            # handling shutdown
             if result.get("tool") == "meta" and isinstance(result.get("result"), dict) and result["result"].get("shutdown"):
                 logger.info("Shutdown requested -> exiting")
                 break
