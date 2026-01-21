@@ -15,9 +15,9 @@ except Exception:
     _HAS_PYAUTOGUI = False
     logger.warning("pyautogui not available — type_text tool will be disabled")
 
-def open_app(name: str):
+def open_app(app_name: str):
     try:
-        name = name.lower().strip()
+        name = app_name.lower().strip()
 
         aliases = {
             "vs code": "visual studio code",
