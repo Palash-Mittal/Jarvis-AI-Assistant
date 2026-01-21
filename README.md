@@ -32,6 +32,8 @@ Context-aware replies
 
 Follow-up questions for ambiguous commands
 
+---
+
 ## System Tools
 
 Jarvis can:
@@ -46,6 +48,8 @@ Control system behavior (extensible)
 
 Switch personality modes (Developer / Casual / Silent)
 
+---
+
 ## Memory System
 
 SQLite-based persistent memory
@@ -55,6 +59,8 @@ Remembers preferences & configuration
 Mode stored across sessions
 
 Safe add / forget memory operations
+
+---
 
 ## Architecture Highlights
 
@@ -67,6 +73,8 @@ Strict tool validation
 Modular backend design
 
 Rotating logs for debugging
+
+---
 
 ## Project Structure
 ```bash
@@ -81,6 +89,8 @@ Rotating logs for debugging
 ├── config.py            # Configuration (LLM, engine)
 └── memory.db            # Persistent memory database
 ```
+---
+
 ## 🧪 Example Commands
 
 Jarvis open chrome
@@ -95,6 +105,8 @@ Jarvis enter developer mode
 Jarvis type hello world
 
 Jarvis shutdown
+
+---
 
 ## Tool System
 
@@ -114,6 +126,8 @@ set_mode(mode)
 
 LLM outputs strict JSON, which is validated before execution.
 
+---
+
 ## Safety & Reliability
 
 No raw LLM execution
@@ -123,6 +137,8 @@ All actions must match allowed tools
 Invalid or malformed plans are ignored safely
 
 Tool failures are logged and handled gracefully
+
+---
 
 ## Requirements
 
@@ -142,6 +158,8 @@ Supported LLM (e.g. gemma2, llama3)
 
 Windows OS
 
+---
+
 ## Running the Project
 ```bash
 python main.py
@@ -153,4 +171,6 @@ Connect to a GUI
 Use with Electron / Tauri
 
 Control remotely
+
+---
 
