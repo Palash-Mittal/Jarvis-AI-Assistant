@@ -181,3 +181,11 @@ Control remotely
 Built as a learning-driven AI assistant project.
 
 ---
+
+## **Work in Progress**
+
+This project is actively under development. Some features may be incomplete,
+unstable, or subject to change. The repository is shared to demonstrate
+system design, architecture, and learning progress.
+
+---
