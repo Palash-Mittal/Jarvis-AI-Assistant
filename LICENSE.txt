@@ -1,0 +1,4 @@
+Copyright (c) 2026 Palash Mittal
+
+This repository is shared for viewing and educational purposes only.
+Copying, modifying, or redistributing the code without permission is not allowed.
