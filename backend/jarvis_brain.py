@@ -7,7 +7,7 @@ import config
 from logger import logger
 import time
 
-# -------------------- LLM CONFIG --------------------
+# LLM
 
 OLLAMA = config.LLM.get("ollama_executable", "ollama")
 DEFAULT_MODEL = config.LLM.get("default_model", "gemma2")
@@ -39,7 +39,7 @@ Keep responses extremely short.
 Only speak when necessary.
 """
 
-    # DEFAULT (normal / formal Jarvis)
+    # For default jarvis
     return """
 You are Jarvis, a calm, intelligent, and professional AI assistant.
 Address the user as "sir" naturally (at most once per response).
@@ -161,7 +161,7 @@ TOOL_REGISTRY = {
     "set_mode": set_mode
 }
 
-# -------------------- SHORT-TERM MEMORY --------------------
+# Short term memory
 
 SHORT_TERM_CONTEXT = []
 MAX_CONTEXT = 6
@@ -177,7 +177,7 @@ def get_short_term_context():
     return "\n".join(SHORT_TERM_CONTEXT) if SHORT_TERM_CONTEXT else ""
 
 
-# -------------------- LONG-TERM MEMORY --------------------
+# Long term memory
 
 def get_relevant_memory(message):
     memories = get_all_memory()
@@ -207,7 +207,7 @@ def forget_memory(keyword):
     return removed
 
 
-# -------------------- OLLAMA --------------------
+# ollama things
 
 def call_ollama(prompt, model=None):
     cmd = [OLLAMA, "run", model or DEFAULT_MODEL]
@@ -227,7 +227,7 @@ def call_ollama(prompt, model=None):
         return f"[ERROR] {e}"
 
 
-# -------------------- LLM PLANNER --------------------
+# planning
 
 def llm_plan(message: str):
     prompt = f"""
@@ -294,8 +294,6 @@ Now return ONLY the JSON object:
 
 
     raw = call_ollama(prompt)
-
-    # 🔒 SAFE JSON EXTRACTION
     start = raw.find("{")
     end = raw.rfind("}") + 1
     if start == -1 or end == -1:
@@ -304,39 +302,31 @@ Now return ONLY the JSON object:
 
     try:
         parsed = json.loads(raw[start:end])
-
-        # 🔒 FORCE CORRECT SHAPE
         actions = parsed.get("actions", [])
         if not isinstance(actions, list):
             logger.error("Actions is not a list")
             return {"actions": []}
 
         return {"actions": actions}
-
     except Exception:
         logger.error("Failed to parse planner JSON")
         return {"actions": []}
 
 
 
-# -------------------- TOOL EXECUTION --------------------
+# tool execution
 
 def execute_plan(actions):
     results = []
-
     for action in actions:
         if not isinstance(action, dict):
             continue
-
         tool = action.get("tool")
         args = action.get("args", {})
-
         func = TOOL_REGISTRY.get(tool)
-
         if not func:
             logger.error(f"Unknown tool: {tool}")
             continue
-
         try:
             result = func(**args)
             results.append({**result, "tool": tool})
@@ -351,7 +341,7 @@ def execute_plan(actions):
     return results
 
 
-# -------------------- JARVIS RESPONSE --------------------
+# jarvis response
 
 def jarvis_reply(message, context=""):
     memories = get_relevant_memory(message)
@@ -384,7 +374,7 @@ Respond as Jarvis:
     return reply
 
 
-# -------------------- DECISION ENGINE --------------------
+# decide function
 
 def decide(message: str, model=None):
     logger.info(f"User: {message}")
@@ -424,13 +414,13 @@ def decide(message: str, model=None):
         context = "No actions could be executed"
 
     if not actions:
-      clarification_prompt = (
+        clarification_prompt = (
           "Ask a short, polite clarification question if needed. "
           "Do not execute any action yet."
-      )
-      reply = jarvis_reply(message, clarification_prompt)
+        )
+        reply = jarvis_reply(message, clarification_prompt)
     else:
-      reply = jarvis_reply(message, context)
+        reply = jarvis_reply(message, context)
 
     speak(reply)
 
