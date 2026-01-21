@@ -7,6 +7,6 @@ LLM = {
 
 ENGINE = {
     "stdin_read_timeout_s": 0.1,  
-    "log_path": "backend/jarvis.log",
+    "log_path": "jarvis.log",
     "allow_raw_text": True  # if True, treat plain text input as {"command": "<text>"}
 }
