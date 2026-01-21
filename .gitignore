@@ -29,3 +29,5 @@ backend/backend/
 backend/jarvis.log
 
 backend/__pycache__
+
+electron-app/
