@@ -56,8 +56,14 @@ def main_loop():
         if command == "voice_input":
             try:
                 text = transcribe_whisper()
+
+                if not text:
+                    logger.info("Wake word not detected — ignoring input")
+                    continue
+                
                 out = decide(text)
                 send(out)
+
                 if out.get("tool") == "meta" and isinstance(out.get("result"), dict) and out["result"].get("shutdown"):
                     logger.info("Shutdown requested -> exiting")
                     break
