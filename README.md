@@ -3,8 +3,8 @@
 A Jarvis-style desktop AI assistant for Windows, inspired by Iron Man, powered by a local LLM (Ollama), voice control, tool execution, and persistent memory.
 
 This project is designed to feel like a real personal assistant, not just a chatbot.
-
-## ✨ Features
+---
+## Features
 
 🎙️ Voice Interaction
 
@@ -15,8 +15,8 @@ Wake word detection ("Jarvis")
 Silence-based recording (hands-free)
 
 Text-to-speech responses (Jarvis-style voice)
-
-## 🧠 Intelligence
+---
+## Intelligence
 
 Local LLM execution via Ollama
 
@@ -28,7 +28,7 @@ Context-aware replies
 
 Follow-up questions for ambiguous commands
 
-## 🛠️ System Tools
+## System Tools
 
 Jarvis can:
 
@@ -42,7 +42,7 @@ Control system behavior (extensible)
 
 Switch personality modes (Developer / Casual / Silent)
 
-## 💾 Memory System
+## Memory System
 
 SQLite-based persistent memory
 
@@ -52,7 +52,7 @@ Mode stored across sessions
 
 Safe add / forget memory operations
 
-## 🧱 Architecture Highlights
+## Architecture Highlights
 
 Tool registry (scalable, clean)
 
@@ -64,7 +64,7 @@ Modular backend design
 
 Rotating logs for debugging
 
-## 📂 Project Structure
+## Project Structure
 ```bash
 ├── main.py              # Entry point, stdin/stdout bridge
 ├── jarvis_brain.py      # Decision engine, planner, executor
@@ -92,7 +92,7 @@ Jarvis type hello world
 
 Jarvis shutdown
 
-## 🧩 Tool System
+## Tool System
 
 Tools are executed using a registry-based dispatcher:
 
@@ -110,7 +110,7 @@ set_mode(mode)
 
 LLM outputs strict JSON, which is validated before execution.
 
-## 🛡️ Safety & Reliability
+## Safety & Reliability
 
 No raw LLM execution
 
@@ -120,7 +120,7 @@ Invalid or malformed plans are ignored safely
 
 Tool failures are logged and handled gracefully
 
-## ⚙️ Requirements
+## Requirements
 
 Python
 
@@ -138,7 +138,7 @@ Supported LLM (e.g. gemma2, llama3)
 
 Windows OS
 
-## 🚀 Running the Project
+## Running the Project
 ```bash
 python main.py
 ```
