@@ -3,7 +3,9 @@
 A Jarvis-style desktop AI assistant for Windows, inspired by Iron Man, powered by a local LLM (Ollama), voice control, tool execution, and persistent memory.
 
 This project is designed to feel like a real personal assistant, not just a chatbot.
+
 ---
+
 ## Features
 
 🎙️ Voice Interaction
@@ -15,7 +17,9 @@ Wake word detection ("Jarvis")
 Silence-based recording (hands-free)
 
 Text-to-speech responses (Jarvis-style voice)
+
 ---
+
 ## Intelligence
 
 Local LLM execution via Ollama
