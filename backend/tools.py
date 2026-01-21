@@ -8,7 +8,6 @@ import ctypes
 import pyperclip
 import threading
 
-# pyautogui is optional; catch ImportError during import
 try:
     import pyautogui
     _HAS_PYAUTOGUI = True
@@ -57,7 +56,6 @@ def open_app(name: str):
             subprocess.Popen(path)
             return {"status": "ok", "message": f"Opened {name}"}
 
-        # LAST fallback: Windows start
         subprocess.Popen(f'start "" "{name}"', shell=True)
         return {"status": "ok", "message": f"Tried opening {name}"}
 
