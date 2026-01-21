@@ -20,8 +20,6 @@ def open_app(app_name: str):
         name = app_name.lower().strip()
 
         aliases = {
-            "vs code": "visual studio code",
-            "vscode": "visual studio code",
             "file explorer": "explorer",
             "cmd": "command prompt",
             "ms edge": "edge",
@@ -41,8 +39,6 @@ def open_app(app_name: str):
 
             "edge": r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
             "chrome": r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-
-            "visual studio code": r"C:\Users\Palash\AppData\Local\Programs\Microsoft VS Code\Code.exe",
 
             "steam": r"C:\Program Files (x86)\Steam\steam.exe",
             "epic games": r"C:\Program Files (x86)\Epic Games\Launcher\Engine\Binaries\Win64\EpicGamesLauncher.exe",
