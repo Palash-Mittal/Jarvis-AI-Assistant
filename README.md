@@ -65,7 +65,7 @@ Modular backend design
 Rotating logs for debugging
 
 ## 📂 Project Structure
-
+```bash
 ├── main.py              # Entry point, stdin/stdout bridge
 ├── jarvis_brain.py      # Decision engine, planner, executor
 ├── jarvis_voice.py      # Voice recording + Whisper STT
@@ -76,7 +76,7 @@ Rotating logs for debugging
 ├── logger.py            # Logging system
 ├── config.py            # Configuration (LLM, engine)
 └── memory.db            # Persistent memory database
-
+```
 ## 🧪 Example Commands
 
 Jarvis open chrome
