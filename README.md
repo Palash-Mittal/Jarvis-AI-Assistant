@@ -174,3 +174,7 @@ Control remotely
 
 ---
 
+## Author
+
+**Palash Mittal**
+Built as a learning-driven AI assistant project.
