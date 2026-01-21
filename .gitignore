@@ -22,12 +22,12 @@ electron-app/Thumbs.db
 # Environment variables
 electron-app/.env
 
-backend/memory.db
+memory.db
 
-backend/backend/
+backend/
 
-backend/jarvis.log
+jarvis.log
 
-backend/__pycache__
+__pycache__
 
 electron-app/
