@@ -16,7 +16,7 @@ logger.setLevel(logging.DEBUG)
 if not logger.handlers:
     logger.addHandler(handler)
 
-# Also allow console output for debug when run interactively
+
 console = logging.StreamHandler()
 console.setFormatter(formatter)
 logger.addHandler(console)
