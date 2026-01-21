@@ -3,8 +3,8 @@ import pyttsx3
 import threading
 from logger import logger
 
-VOICE_INDEX = 1   # 🔁 change after testing voices
-RATE = 165        # slower = more Jarvis-like
+VOICE_INDEX = 1   
+RATE = 165        
 VOLUME = 1.0
 
 
