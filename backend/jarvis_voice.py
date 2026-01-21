@@ -36,9 +36,6 @@ def contains_wake_word(text):
 
     return any(w in text for w in wake_words)
 
-
-
-
 def record_audio_silence():
     input_audio_chunks=[]
     prebuffer_chunks = []
@@ -60,7 +57,6 @@ def record_audio_silence():
         if len(prebuffer_chunks) > max_prebuffer_chunks:
             prebuffer_chunks.pop(0)
 
-        # --- Detect first speech ---
         if not speech_detected:
             if volume > SILENCE_THRESHOLD:
                 speech_detected = True
@@ -69,7 +65,6 @@ def record_audio_silence():
 
             input_audio_chunks.append(chunk)
 
-            # --- Silence timing using real time ---
             if volume < SILENCE_THRESHOLD:
                 if input_silence_start_time is None:
                     input_silence_start_time = time.monotonic()
@@ -114,13 +109,11 @@ def strip_wake_word(text):
 
 
 def transcribe_whisper():
-    # Wait for wake-like speech
     audio = wait_for_wake_word_audio()
 
     if audio is None:
         return ""
 
-    # Transcribe full phrase
     path = save_temp_wav(audio)
     result = model.transcribe(path, fp16=False)
     text = result.get("text", "").strip()
@@ -128,7 +121,6 @@ def transcribe_whisper():
     if not text:
         return ""
 
-    # Wake word fuzzy check
     if not contains_wake_word(text):
         return ""
 
