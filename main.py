@@ -1,4 +1,4 @@
-# backend/main.py
+#main.py
 import sys
 import json
 import time

@@ -1,4 +1,4 @@
-# backend/config.py
+#config.py
 LLM = {
     "default_model": "gemma2",
     "ollama_executable": "ollama",

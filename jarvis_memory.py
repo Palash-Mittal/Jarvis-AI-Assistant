@@ -1,4 +1,4 @@
-# backend/jarvis_memory.py
+#jarvis_memory.py
 from db import get_conn, init_db, DB_PATH
 import sqlite3
 

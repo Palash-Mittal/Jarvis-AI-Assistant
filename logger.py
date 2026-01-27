@@ -1,11 +1,16 @@
-# backend/logger.py
+#logger.py
 import logging
 from logging.handlers import RotatingFileHandler
 import config
 import os
 
-LOG_PATH = config.ENGINE.get("log_path", "jarvis.log")
-os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
+LOG_PATH = "jarvis.log"
+
+log_dir = os.path.dirname(LOG_PATH)
+
+if log_dir:
+    os.makedirs(log_dir, exist_ok=True)
+
 
 handler = RotatingFileHandler(LOG_PATH, maxBytes=2_000_000, backupCount=3, encoding="utf-8")
 formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
