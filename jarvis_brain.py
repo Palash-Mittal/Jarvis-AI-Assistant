@@ -1,5 +1,4 @@
 #jarvis_brain.py
-
 import subprocess
 import json
 from jarvis_tts import speak
@@ -8,6 +7,17 @@ from jarvis_memory import add_memory, get_all_memory, find_memory_by_key, delete
 import config
 from logger import logger
 import time
+from tools.window_tools import(
+    active_app,
+    list_apps,
+    focus_app,
+    close_app,
+    minimize_all
+)
+
+CONVERSATION_ACTIVE = False
+LAST_CONVERSATION_TIME = 0
+CONVERSATION_TIMEOUT = 20  # seconds
 
 # LLM
 
@@ -89,6 +99,21 @@ Available tools (use EXACT names and arguments):
 10. reminder(seconds: number, message: string)
    - Sets a reminder after given seconds.
 
+11. active_app()
+   - Use to identify the currently focused application.
+
+12. list_apps()
+   - Use to list currently open applications.
+
+13. focus_app(app_name: string)
+   - Use to switch focus to an open application.
+
+14. close_app(app_name?: string)
+   - Close a specific app or the currently active window.
+
+15. minimize_all()
+   - Minimize all open windows.
+
 
 GENERAL DECISION RULES (VERY IMPORTANT):
 
@@ -160,7 +185,12 @@ TOOL_REGISTRY = {
     "find_file": find_file,
     "clipboard": clipboard,
     "reminder": reminder,
-    "set_mode": set_mode
+    "set_mode": set_mode,
+    "active_app": active_app,
+    "list_apps": list_apps,
+    "focus_app": focus_app,
+    "close_app": close_app,
+    "minimize_all": minimize_all
 }
 
 # Short term memory
@@ -379,6 +409,14 @@ Respond as Jarvis:
 # decide function
 
 def decide(message: str, model=None):
+    global CONVERSATION_ACTIVE, LAST_CONVERSATION_TIME
+
+    now = time.time()
+
+    # Auto-disable conversation if timeout
+    if CONVERSATION_ACTIVE and now - LAST_CONVERSATION_TIME > CONVERSATION_TIMEOUT:
+        CONVERSATION_ACTIVE = False
+
     logger.info(f"User: {message}")
     for a in ["shutdown","exit"]:
         if (message.lower()).find(a)!=-1:
@@ -423,6 +461,9 @@ def decide(message: str, model=None):
         reply = jarvis_reply(message, clarification_prompt)
     else:
         reply = jarvis_reply(message, context)
+
+    CONVERSATION_ACTIVE = True
+    LAST_CONVERSATION_TIME = time.time()
 
     speak(reply)
 
